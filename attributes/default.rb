@@ -123,3 +123,6 @@ default['php']['configure_options'] = %W{--prefix=#{php['prefix_dir']}
 
 default['php']['ini']['template'] = "php.ini.erb"
 default['php']['ini']['cookbook'] = "php"
+default['php']['ini']['owner'] = "root"
+default['php']['ini']['group'] = "root"
+default['php']['ini']['mode'] = "0644"
