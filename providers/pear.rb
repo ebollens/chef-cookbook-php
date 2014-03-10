@@ -120,7 +120,7 @@ def current_installed_version
                                    v = nil
                                    version_check_cmd = "#{@bin} -d "
                                    version_check_cmd << " preferred_state=#{can_haz(@new_resource, "preferred_state")}"
-                                   version_check_cmd << " list#{expand_channel(can_haz(@new_resource, "channel"))}"
+                                   version_check_cmd << " list #{expand_channel(can_haz(@new_resource, "channel"))}"
                                    p = shell_out(version_check_cmd)
                                    response = nil
                                    response = grep_for_version(p.stdout, @new_resource.package_name) if p.stdout =~ /\.?Installed packages/i
@@ -130,10 +130,10 @@ end
 
 def candidate_version
   @candidate_version ||= begin
-                           candidate_version_cmd = "#{@bin} -d "
-                           candidate_version_cmd << "preferred_state=#{can_haz(@new_resource, "preferred_state")}"
-                           candidate_version_cmd << " search#{expand_channel(can_haz(@new_resource, "channel"))}"
-                           candidate_version_cmd << "#{@new_resource.package_name}"
+                           candidate_version_cmd = "#{@bin} -d"
+                           candidate_version_cmd << " preferred_state=#{can_haz(@new_resource, "preferred_state")}"
+                           candidate_version_cmd << " search #{expand_channel(can_haz(@new_resource, "channel"))}"
+                           candidate_version_cmd << " #{@new_resource.package_name}"
                            p = shell_out(candidate_version_cmd)
                            response = nil
                            response = grep_for_version(p.stdout, @new_resource.package_name) if p.stdout =~ /\.?Matched packages/i
@@ -144,7 +144,7 @@ end
 def install_package(name, version)
   command = "echo \"\r\" | #{@bin} -d"
   command << " preferred_state=#{can_haz(@new_resource, "preferred_state")}"
-  command << " install -a#{expand_options(@new_resource.options)}"
+  command << " install -a #{expand_options(@new_resource.options)}"
   command << " #{prefix_channel(can_haz(@new_resource, "channel"))}#{name}"
   command << "-#{version}" if version && !version.empty?
   pear_shell_out(command)
@@ -154,7 +154,7 @@ end
 def upgrade_package(name, version)
   command = "echo \"\r\" | #{@bin} -d"
   command << " preferred_state=#{can_haz(@new_resource, "preferred_state")}"
-  command << " upgrade -a#{expand_options(@new_resource.options)}"
+  command << " upgrade -a #{expand_options(@new_resource.options)}"
   command << " #{prefix_channel(can_haz(@new_resource, "channel"))}#{name}"
   command << "-#{version}" if version && !version.empty?
   pear_shell_out(command)
